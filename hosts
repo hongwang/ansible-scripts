@@ -1,0 +1,2 @@
+[sh-job]
+sh-job-2 ansible_ssh_host=10.20.32.145
