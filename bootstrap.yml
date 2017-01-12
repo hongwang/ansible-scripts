@@ -1,6 +1,7 @@
 ---
 - name: Bootstrap Ubuntu servers
   hosts: jobservers
+  gather_facts: False
   become: yes
   roles:
     - bootstrap
