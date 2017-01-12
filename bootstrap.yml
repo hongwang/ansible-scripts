@@ -1,0 +1,6 @@
+---
+- name: Bootstrap Ubuntu servers
+  hosts: jobservers
+  become: yes
+  roles:
+    - bootstrap

@@ -1,2 +1,2 @@
-[sh-job]
-sh-job-2 ansible_ssh_host=10.20.32.145
+[jobservers]
+sh-job-2 ansible_host=10.20.32.145 ansible_python_interpreter=/usr/bin/python3
