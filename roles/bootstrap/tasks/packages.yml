@@ -3,3 +3,4 @@
   action: apt pkg={{ item }} state=installed
   with_items:
     - vim
+    - git

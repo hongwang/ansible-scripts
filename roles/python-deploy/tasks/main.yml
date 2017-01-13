@@ -1,0 +1,23 @@
+---
+- name: Create the project directory.
+  file: group={{ owner }} owner={{ owner }} mode=755 state=directory path={{ project_root }}
+
+- name: Pull sources from the repository.
+  git:
+    repo: "{{ project_repo }}"
+    dest: "{{ project_root }}"
+    version: "{{ project_branch }}"
+    accept_hostkey: true
+    update: yes
+    force: yes
+
+- name: Create virtualvenv
+  shell: python3 -m venv {{ project_virtualenv }}
+
+- name: Install requirements
+  pip:
+    requirements: "{{ project_root }}/requirements.txt"
+    virtualenv: "{{ project_virtualenv }}"
+  
+- name: Install appliction
+  shell: "{{ project_virtualenv }}/bin/python3 setup.py develop"

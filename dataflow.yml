@@ -1,0 +1,16 @@
+---
+- name: Deploy dataflow
+  hosts: sh-job-2
+  gather_facts: False
+  become: yes
+  roles:
+    - python
+    - python-deploy
+  vars:
+    owner: vertica  
+    project_name: dataflow
+    project_root: /opt/{{ project_name }}
+    project_repo: https://bitbucket.org/hcdlearning/dataflow.git
+    project_branch: develop
+    project_virtualenv: "{{ project_root }}/venv"
+
