@@ -1,23 +1,60 @@
 ---
-- name: Create the project directory.
-  file: group={{ owner }} owner={{ owner }} mode=755 state=directory path={{ project_root }}
+- name: Create the temp project directory
+  file: path={{ build_project_root }} state=directory
+  delegate_to: "{{ build_server }}"
+  become_user: "{{ build_user }}"
 
 - name: Pull sources from the repository.
   git:
     repo: "{{ project_repo }}"
-    dest: "{{ project_root }}"
+    dest: "{{ build_project_root }}"
     version: "{{ project_branch }}"
-    accept_hostkey: true
     update: yes
     force: yes
+    accept_hostkey: yes
+  delegate_to: "{{ build_server }}"
+  become_user: "{{ build_user }}"
+
+- name: Remove development files
+  file: path="{{ build_project_root }}/{{ item }}" state=absent
+  with_items:
+    - .git
+    - .gitignore
+    - .vscode
+    - .pylintrc
+  delegate_to: "{{ build_server }}"
+  become_user: "{{ build_user }}"
+
+- name: Copy sources to server
+  copy:
+    src: "{{ build_project_root }}"
+    dest: "{{ project_parent_root }}"
+    owner: "{{ owner }}"
+    group: "{{ owner }}"
+    directory_mode: 755
+  
+- name: Remove the temp project directory
+  file: path={{ build_project_root }} state=absent
+  delegate_to: "{{ build_server }}"
+  become_user: "{{ build_user }}"
 
 - name: Create virtualvenv
   shell: python3 -m venv {{ project_virtualenv }}
+
+- name: Update pip
+  pip: 
+    name: pip 
+    state: latest
+    virtualenv: "{{ project_virtualenv }}"
 
 - name: Install requirements
   pip:
     requirements: "{{ project_root }}/requirements.txt"
     virtualenv: "{{ project_virtualenv }}"
+    extra_args: --default-timeout=999 -i https://pypi.douban.com/simple/
   
 - name: Install appliction
   shell: "{{ project_virtualenv }}/bin/python3 setup.py develop"
+  args:
+    chdir: "{{ project_root }}"
+
