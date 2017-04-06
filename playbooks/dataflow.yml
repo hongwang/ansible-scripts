@@ -16,5 +16,4 @@
     build_server: 127.0.0.1
     build_user: hong
     build_project_root: /tmp/{{ project_name }}
-    
 

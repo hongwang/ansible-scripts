@@ -1,0 +1,11 @@
+---
+- name: Deploy airflow
+  hosts: workflow-servers
+  strategy: debug
+  gather_facts: False
+  roles:
+    - python
+    - pip
+  vars:
+    python_packages:
+      - airflow[async, crypto, jdbc, hdfs, hive, mysql, password, vertica, webhdfs]

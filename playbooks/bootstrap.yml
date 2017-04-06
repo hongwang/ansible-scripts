@@ -1,6 +1,6 @@
 ---
 - name: Bootstrap Ubuntu servers
-  hosts: jobservers
+  hosts: workflow-servers
   gather_facts: False
   become: yes
   roles:
