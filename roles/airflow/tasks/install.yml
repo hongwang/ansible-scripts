@@ -1,0 +1,13 @@
+---
+- name: Install system packages
+  action: apt pkg={{ item }} state=installed
+  with_items:
+    - python-dev
+    - libffi-dev
+    - libssl-dev
+    - libmysqlclient-dev
+    - libkrb5-dev
+
+- name: Install python packages
+  command: pip install "airflow[async,crypto,jdbc,hdfs,hive,mysql,password,vertica,webhdfs]"
+  become: True
