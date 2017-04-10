@@ -1,0 +1,9 @@
+---
+- name: Deploy nodejs
+  hosts: workflow-servers
+  roles:
+    - nodejs
+  vars:
+    node_version: 7.x
+    npm_packages:
+      - pm2

@@ -1,7 +1,25 @@
+# Install Node.js using packages crafted by NodeSource
 ---
+- name: Download the nodejs install script
+  get_url: url=https://deb.nodesource.com/setup_{{ node_version }} dest=/tmp/setup_nodejs_{{ node_version }}.sh
 
-- name: Node.js | Add repository for package
-  apt_repository: repo='ppa:chris-lea/node.js' state=present update_cache=yes
+- name: Execute the nodejs install script
+  become: yes
+  shell: bash setup_nodejs_{{ node_version }}.sh chdir=/tmp executable=/bin/bash
 
-- name: Node.js | Install package
-  apt: pkg=nodejs state=present
+- name: Install Node.js
+  apt:
+    pkg:
+      - nodejs
+    state: installed
+    update_cache: yes
+
+- name: Ensure Node.js and npm are installed.
+  apt: "name=nodejs={{ nodejs_version|regex_replace('x', '') }}* state=present"
+
+- name: Install global packages
+  npm: 
+    name: "{{ item }}"
+    global: yes
+    state: present
+  with_items: "{{ npm_packages }}"

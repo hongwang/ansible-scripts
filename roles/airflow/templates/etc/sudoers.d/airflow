@@ -1,1 +1,1 @@
-{{ airflow_user }} ALL=({{ airflow_user }}) NOPASSWD: /bin/systemctl, /bin/mkdir
+{{ airflow_user }} ALL=NOPASSWD: /bin/systemctl, /bin/mkdir
