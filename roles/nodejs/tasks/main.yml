@@ -14,9 +14,6 @@
     state: installed
     update_cache: yes
 
-- name: Ensure Node.js and npm are installed.
-  apt: "name=nodejs={{ nodejs_version|regex_replace('x', '') }}* state=present"
-
 - name: Install global packages
   npm: 
     name: "{{ item }}"
