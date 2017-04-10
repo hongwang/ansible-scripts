@@ -17,6 +17,15 @@
     group: "root"
     mode: "0644"
 
+- name: Set Sudoers
+  become: yes
+  template: 
+    src: "etc/sudoers.d/airflow" 
+    dest: "/etc/sudoers.d/airflow"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
 - name: Set Airflow Service
   become: yes
   template: 
