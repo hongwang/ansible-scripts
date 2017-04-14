@@ -1,0 +1,5 @@
+[jobservers]
+sh-job-2 ansible_host=10.20.32.145 ansible_python_interpreter=/usr/bin/python3
+
+[workflow-servers]
+sh-airflow-01 ansible_host=10.20.32.195 ansible_python_interpreter=/usr/bin/python3
