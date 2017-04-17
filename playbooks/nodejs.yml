@@ -3,7 +3,8 @@
   hosts: workflow-servers
   roles:
     - nodejs
+    - pm2
   vars:
+    pm2_user: vertica
     node_version: 7.x
-    npm_packages:
-      - pm2
+    npm_packages: []
