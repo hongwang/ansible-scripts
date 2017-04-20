@@ -10,7 +10,7 @@ Group={{ airflow_user }}
 Type=simple
 ExecStart=/usr/local/bin/airflow scheduler -n 5
 Restart=always
-RestartSec=5s
+RestartSec=1s
 
 [Install]
 WantedBy=multi-user.target
