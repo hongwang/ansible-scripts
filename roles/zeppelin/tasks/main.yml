@@ -1,0 +1,37 @@
+---
+- name: Download Zeppelin package
+  get_url: 
+    url: "{{ package_url }}"
+    dest: "~{{ zeppelin_user }}/downloads"
+    owner: "{{ zeppelin_user }}"
+    group: "{{ zeppelin_user }}"
+
+- name: Unpack Zeppelin package
+  unarchive:
+    src: "~{{ zeppelin_user }}/downloads/{{ package_url | basename }}"
+    dest: /opt/
+    owner: "{{ zeppelin_user }}"
+    group: "{{ zeppelin_user }}"
+    remote_src: True
+
+- name: Set link to zeppelin directory
+  file:
+    src: "/opt/{{ package_url | basename　| splitext | first }}"
+    dest: "/opt/zeppelin"
+    owner: "{{ zeppelin_user }}"
+    group: "{{ zeppelin_user }}"
+    state: link
+    force: yes
+
+- name: Install zeppelin interpreters
+  command: /opt/zeppelin/bin/install-interpreter.sh --name {{ item }}
+  with_items:
+    - cassandra
+    - angular
+    - elasticsearch
+    - file
+    - jdbc
+    - livy
+    - md
+    - python
+    - shell
