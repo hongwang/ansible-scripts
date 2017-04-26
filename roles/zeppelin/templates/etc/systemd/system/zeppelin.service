@@ -3,11 +3,11 @@ Description=Zeppelin daemon
 After=syslog.target network.target
 
 [Service]
-Environment=ZEPPELIN_HOME=/opt/zeppelin
+Environment=ZEPPELIN_HOME={{ zeppelin_home }}
 User={{ zeppelin_user }}
 Group={{ zeppelin_user }}
 Type=simple
-ExecStart=/opt/zeppelin/bin/zeppelin-daemon.sh upstart
+ExecStart={{ zeppelin_home }}/bin/zeppelin-daemon.sh upstart
 Restart=on-failure
 RestartSec=5s
 

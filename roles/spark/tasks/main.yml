@@ -1,0 +1,39 @@
+---
+- name: Spark | Download package
+  get_url: 
+    url: "{{ spark_package_url }}"
+    dest: "~{{ spark_user }}/downloads"
+    owner: "{{ spark_user }}"
+    group: "{{ spark_user }}"
+
+- name: Spark | Unpack package
+  unarchive:
+    src: "~{{ spark_user }}/downloads/{{ spark_package_url | basename }}"
+    dest: /opt/
+    owner: "{{ spark_user }}"
+    group: "{{ spark_user }}"
+    remote_src: True
+
+- name: Spark | Set link to directory
+  file:
+    src: "/opt/{{ spark_package_url | basename　| splitext | first }}"
+    dest: "{{ spark_home }}"
+    owner: "{{ spark_user }}"
+    group: "{{ spark_user }}"
+    state: link
+    force: yes
+
+- name: Spark | Copy config
+  template: 
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
+    owner: "{{ spark_user }}"
+    group: "{{ spark_user }}"
+    mode: "0644"
+  with_items:
+    - { src: opt/spark/conf/fairscheduler.xml, dest: /opt/spark/conf/fairscheduler.xml }
+    - { src: opt/spark/conf/hdfs-site.xml, dest: /opt/spark/conf/hdfs-site.xml }
+    - { src: opt/spark/conf/hive-site.xml, dest: /opt/spark/conf/hive-site.xml }
+    - { src: opt/spark/conf/slaves, dest: /opt/spark/conf/slaves }
+    - { src: opt/spark/conf/spark-defaults.conf, dest: /opt/spark/conf/spark-defaults.conf }
+    - { src: opt/spark/conf/spark-env.sh, dest: /opt/spark/conf/spark-env.sh }

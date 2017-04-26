@@ -1,14 +1,14 @@
 ---
 - name: Download Zeppelin package
   get_url: 
-    url: "{{ package_url }}"
+    url: "{{ zeppelin_package_url }}"
     dest: "~{{ zeppelin_user }}/downloads"
     owner: "{{ zeppelin_user }}"
     group: "{{ zeppelin_user }}"
 
 - name: Unpack Zeppelin package
   unarchive:
-    src: "~{{ zeppelin_user }}/downloads/{{ package_url | basename }}"
+    src: "~{{ zeppelin_user }}/downloads/{{ zeppelin_package_url | basename }}"
     dest: /opt/
     owner: "{{ zeppelin_user }}"
     group: "{{ zeppelin_user }}"
@@ -16,15 +16,15 @@
 
 - name: Set link to zeppelin directory
   file:
-    src: "/opt/{{ package_url | basename　| splitext | first }}"
-    dest: "/opt/zeppelin"
+    src: "/opt/{{ zeppelin_package_url | basename　| splitext | first }}"
+    dest: "{{ zeppelin_home }}"
     owner: "{{ zeppelin_user }}"
     group: "{{ zeppelin_user }}"
     state: link
     force: yes
 
 - name: Install zeppelin interpreters
-  command: /opt/zeppelin/bin/install-interpreter.sh --name {{ item }}
+  command: "{{ zeppelin_home }}/bin/install-interpreter.sh --name {{ item }}"
   with_items:
     - cassandra
     - angular
@@ -39,7 +39,7 @@
 - name: Copy zeppelin config
   template: 
     src: "opt/zeppelin/conf/zeppelin-env.sh"
-    dest: "/opt/zeppelin/conf/zeppelin-env.sh"
+    dest: "{{ zeppelin_home }}/conf/zeppelin-env.sh"
     owner: "{{ zeppelin_user }}"
     group: "{{ zeppelin_user }}"
     mode: "0644"

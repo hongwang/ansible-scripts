@@ -1,5 +1,5 @@
 ---
-- name: Deploy airflow
+- name: Deploy Zeppelin
   hosts: job-servers
   gather_facts: False
   become: yes
@@ -7,4 +7,5 @@
     - zeppelin
   vars:
     zeppelin_user: vertica
-    package_url: http://mirrors.hust.edu.cn/apache/zeppelin/zeppelin-0.7.1/zeppelin-0.7.1-bin-netinst.tgz
+    zeppelin_package_url: http://mirrors.hust.edu.cn/apache/zeppelin/zeppelin-0.7.1/zeppelin-0.7.1-bin-netinst.tgz
+    zeppelin_home: /opt/zeppelin
