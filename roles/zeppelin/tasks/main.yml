@@ -35,3 +35,26 @@
     - md
     - python
     - shell
+
+- name: Copy zeppelin config
+  template: 
+    src: "opt/zeppelin/conf/zeppelin-env.sh"
+    dest: "/opt/zeppelin/conf/zeppelin-env.sh"
+    owner: "{{ zeppelin_user }}"
+    group: "{{ zeppelin_user }}"
+    mode: "0644"
+
+- name: Set zeppelin Service
+  become: yes
+  template: 
+    src: "etc/systemd/system/zeppelin.service"
+    dest: "/etc/systemd/system/zeppelin.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: Enable zeppelin Service
+  become: yes
+  systemd:
+    name: "zeppelin.service"
+    enabled: yes

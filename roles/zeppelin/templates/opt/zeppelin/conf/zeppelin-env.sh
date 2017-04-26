@@ -1,0 +1,1 @@
+export ZEPPELIN_PORT=30001

@@ -11,7 +11,7 @@
 - name: Set Airflow Profile
   become: yes
   template: 
-    src: "etc/profile.d/airflow.sh" 
+    src: "etc/profile.d/airflow.sh"
     dest: "/etc/profile.d/airflow.sh"
     owner: "root"
     group: "root"

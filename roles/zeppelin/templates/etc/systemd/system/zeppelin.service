@@ -1,0 +1,15 @@
+[Unit]
+Description=Zeppelin daemon
+After=syslog.target network.target
+
+[Service]
+Environment=ZEPPELIN_HOME=/opt/zeppelin
+User={{ zeppelin_user }}
+Group={{ zeppelin_user }}
+Type=simple
+ExecStart=/opt/zeppelin/bin/zeppelin-daemon.sh upstart
+Restart=on-failure
+RestartSec=5s
+
+[Install]
+WantedBy=multi-user.target
