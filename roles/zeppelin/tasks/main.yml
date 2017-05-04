@@ -23,6 +23,10 @@
     state: link
     force: yes
 
+- name: Zeppelin | Install python interpreter dependence
+  command: pip3 install py4j
+  become: True
+
 - name: Install zeppelin interpreters
   command: "{{ zeppelin_home }}/bin/install-interpreter.sh --name {{ item }}"
   with_items:
