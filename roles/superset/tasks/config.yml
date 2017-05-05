@@ -1,0 +1,17 @@
+---
+- name: Superset | Copy config file
+  template: 
+    src: "opt/superset/superset_config.py"
+    dest: "{{ superset_home }}/superset_config.py"
+    owner: "{{ superset_user }}"
+    group: "{{ superset_user }}"
+    mode: "0644"
+
+- name: Superset | Set profile
+  become: yes
+  template: 
+    src: "etc/profile.d/superset.sh"
+    dest: "/etc/profile.d/superset.sh"
+    owner: "root"
+    group: "root"
+    mode: "0644"

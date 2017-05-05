@@ -1,0 +1,23 @@
+---
+- name: Install system packages
+  action: apt pkg={{ item }} state=installed
+  with_items:
+    - build-essential
+    - libssl-dev
+    - libffi-dev 
+    - python-dev 
+    - libsasl2-dev
+    - libldap2-dev
+
+- name: Superset | Install python packages
+  become: True
+  pip:
+    name: "{{ item }}"
+    state: latest
+    #extra_args: -i https://pypi.douban.com/simple/
+    executable: pip3
+  with_items:
+    - setuptools
+    - mysqlclient
+    - pyhive
+    - superset

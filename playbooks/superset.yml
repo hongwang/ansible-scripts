@@ -1,0 +1,12 @@
+---
+- name: Deploy Superset
+  hosts: job-servers
+  gather_facts: False
+  become: yes
+  roles:
+    #- bootstrap
+    #- python
+    - superset
+  vars:
+    superset_user: vertica
+    superset_home: /opt/superset

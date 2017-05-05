@@ -23,9 +23,26 @@
     state: link
     force: yes
 
-- name: Zeppelin | Install python interpreter dependence
-  command: pip3 install py4j
+
+# For python interpreter(matplotlib)
+- name: Superset | Install system packages
+  action: apt pkg={{ item }} state=installed
+  with_items:
+    - python3-tk
+
+# For python interpreter
+- name: Zeppelin | Install python packages
   become: True
+  pip:
+    name: "{{ item }}"
+    state: latest
+    extra_args: -i https://pypi.douban.com/simple/
+    executable: pip3
+  with_items:
+    - py4j
+    - matplotlib
+    - pandas
+    - pandasql
 
 - name: Install zeppelin interpreters
   command: "{{ zeppelin_home }}/bin/install-interpreter.sh --name {{ item }}"
