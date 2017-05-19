@@ -1,12 +1,12 @@
 ---
-- name: Deploy Superset
+- name: Deploy Scrapy
   hosts: job-servers
   gather_facts: False
   become: yes
   roles:
     - bootstrap
     - python
-    - superset
+    - scrapy
   vars:
-    superset_user: vertica
-    superset_home: /opt/superset
+    scrapy_user: vertica
+    scrapy_home: /opt/scrapy

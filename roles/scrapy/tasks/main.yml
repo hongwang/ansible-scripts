@@ -1,0 +1,19 @@
+---
+- name: Scrapy | Install system packages
+  action: apt pkg={{ item }} state=installed
+  with_items:
+    - libxml2-dev 
+    - libxslt1-dev 
+    - zlib1g-dev 
+    - libffi-dev 
+    - libssl-dev
+
+- name: Scrapy | Install python packages
+  become: True
+  pip:
+    name: "{{ item }}"
+    state: latest
+    extra_args: -i https://pypi.douban.com/simple/
+    executable: pip3
+  with_items:
+    - scrapy
