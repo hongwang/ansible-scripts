@@ -15,3 +15,37 @@
     owner: "root"
     group: "root"
     mode: "0644"
+
+- name: Superset | Restart machine
+  command: shutdown -r now "Ansible updates triggered"
+  async: 0
+  poll: 0
+  ignore_errors: true
+
+- name: Superset | Waiting for server to come back
+  sudo: False
+  local_action: wait_for host="{{ inventory_hostname }}" port=22 delay=1 timeout=300
+
+- name: Superset | Create an admin user
+  command: fabmanager create-admin --app superset --username vertica --firstname vertica --lastname vertica --email vertica@test.com --password 1
+
+- name: Superset | Initialize the database
+  command: superset db upgrade
+
+- name: Superset | Create default roles and permissions
+  command: superset init
+
+- name: Superset | Set systemd Service
+  become: yes
+  template: 
+    src: "etc/systemd/system/superset.service"
+    dest: "/etc/systemd/system/superset.service"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: Enable superset Service
+  become: yes
+  systemd:
+    name: "superset.service"
+    enabled: yes

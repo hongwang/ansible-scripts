@@ -8,6 +8,7 @@
     - python-dev 
     - libsasl2-dev
     - libldap2-dev
+    - libmysqlclient-dev # for mysqlclient package
 
 - name: Superset | Install python packages
   become: True
@@ -21,3 +22,15 @@
     - mysqlclient
     - pyhive
     - superset
+
+# remove it if superset support Spark Sql
+- name: Superset | Install python packages to support SparkSQL
+  become: True
+  pip:
+    name: "{{ item }}"
+    state: latest
+    #extra_args: -i https://pypi.douban.com/simple/
+    executable: pip3
+  with_items:
+    - impyla
+    - git+https://github.com/laserson/python-sasl.git@cython 

@@ -9,5 +9,5 @@
     - libkrb5-dev
 
 - name: Airflow | Install python packages
-  command: pip install "airflow[async,crypto,jdbc,hdfs,hive,mysql,password,vertica,webhdfs]"
+  command: pip install "apache-airflow[async,crypto,jdbc,hdfs,hive,mysql,password,vertica,webhdfs]"
   become: True
