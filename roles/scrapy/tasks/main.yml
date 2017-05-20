@@ -13,7 +13,31 @@
   pip:
     name: "{{ item }}"
     state: latest
-    extra_args: -i https://pypi.douban.com/simple/
+    #extra_args: -i https://pypi.douban.com/simple/
     executable: pip3
   with_items:
     - scrapy
+    - scrapyd
+    - scrapy-client
+    - spiderkeeper
+
+- name: Scrapy | Copy scrapyd config
+  become: yes
+  template: 
+    src: "etc/scrapyd/scrapyd.conf"
+    dest: "/etc/scrapyd/scrapyd.conf"
+    owner: "root"
+    group: "root"
+    mode: "0644"
+
+- name: Scrapy | Create scrapyd directories
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ scrapy_user }}"
+    group: "{{ scrapy_user }}"
+    mode: "0755"
+  with_items:
+    - /etc/scrapyd/dbs
+    - /etc/scrapyd/eggs
+    - /etc/scrapyd/logs
