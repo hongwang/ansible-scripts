@@ -128,31 +128,32 @@
         "cassandra.pooling.max.connection.per.host.local": "8",
         "cassandra.load.balancing.policy": "DEFAULT",
         "cassandra.pooling.new.connection.threshold.local": "100",
-        "cassandra.credentials.password": "none",
+        "cassandra.credentials.password": "HCDhcd@123",
         "cassandra.native.port": "9042",
-        "cassandra.hosts": "localhost",
+        "cassandra.hosts": "10.20.32.71",
         "cassandra.pooling.core.connection.per.host.local": "2",
         "cassandra.retry.policy": "DEFAULT",
         "cassandra.pooling.pool.timeout.millisecs": "5000",
-        "cassandra.protocol.version": "4",
+        "cassandra.protocol.version": "3",
+        "zeppelin.interpreter.localRepo": "/opt/zeppelin/local-repo/2CGMU3T2D",
         "cassandra.pooling.new.connection.threshold.remote": "100",
         "cassandra.pooling.core.connection.per.host.remote": "1",
         "cassandra.pooling.max.request.per.connection.remote": "256",
-        "cassandra.cluster": "Test Cluster",
-        "cassandra.pooling.max.request.per.connection.local": "1024",
+        "cassandra.cluster": "SH",
         "cassandra.speculative.execution.policy": "DEFAULT",
+        "cassandra.pooling.max.request.per.connection.local": "1024",
         "cassandra.compression.protocol": "NONE",
         "cassandra.query.default.fetchSize": "5000",
-        "cassandra.pooling.idle.timeout.seconds": "120",
         "cassandra.keyspace": "system",
-        "cassandra.socket.tcp.no_delay": "true",
+        "cassandra.pooling.idle.timeout.seconds": "120",
+        "cassandra.credentials.username": "farseer",
         "cassandra.max.schema.agreement.wait.second": "10",
-        "cassandra.credentials.username": "none",
-        "cassandra.socket.connection.timeout.millisecs": "5000",
-        "cassandra.query.default.serial.consistency": "SERIAL",
+        "cassandra.socket.tcp.no_delay": "true",
         "cassandra.interpreter.parallelism": "10",
+        "cassandra.query.default.serial.consistency": "SERIAL",
+        "cassandra.socket.connection.timeout.millisecs": "5000",
         "cassandra.pooling.max.connection.per.host.remote": "2",
-        "cassandra.pooling.heartbeat.interval.seconds": "30",
+        "cassandra.pooling.heartbeat.interval.seconds": "60",
         "cassandra.reconnection.policy": "DEFAULT",
         "cassandra.socket.read.timeout.millisecs": "12000"
       },
@@ -221,8 +222,8 @@
         "zeppelin.spark.printREPLOutput": "true",
         "spark.cores.max": "3",
         "zeppelin.dep.additionalRemoteRepository": "spark-packages,http://dl.bintray.com/spark-packages/maven,false;",
-        "zeppelin.spark.importImplicit": "true",
         "zeppelin.spark.sql.stacktrace": "false",
+        "zeppelin.spark.importImplicit": "true",
         "zeppelin.spark.concurrentSQL": "false",
         "zeppelin.spark.useHiveContext": "true",
         "zeppelin.pyspark.python": "python",
@@ -281,12 +282,9 @@
       ],
       "dependencies": [
         {
-          "groupArtifactVersion": "com.datastax.spark:spark-cassandra-connector_2.10:2.0.1",
+          "groupArtifactVersion": "com.datastax.spark:spark-cassandra-connector_2.11:2.0.2",
           "local": false,
-          "exclusions": [
-            "org.scala-lang:scala-library",
-            "org.scala-lang:scala-reflect"
-          ]
+          "exclusions": []
         },
         {
           "groupArtifactVersion": "org.mongodb.spark:mongo-spark-connector_2.11:2.0.0",
@@ -314,8 +312,9 @@
       "name": "python",
       "group": "python",
       "properties": {
-        "zeppelin.python": "python",
-        "zeppelin.python.maxResult": "1000"
+        "zeppelin.python": "python3",
+        "zeppelin.python.maxResult": "1000",
+        "zeppelin.interpreter.localRepo": "/opt/zeppelin/local-repo/2CEFWWBFE"
       },
       "status": "READY",
       "interpreterGroup": [
@@ -477,9 +476,10 @@
       "name": "file",
       "group": "file",
       "properties": {
+        "hdfs.user": "",
         "hdfs.maxlength": "1000",
-        "hdfs.user": "hdfs",
-        "hdfs.url": "http://localhost:50070/webhdfs/v1/"
+        "zeppelin.interpreter.localRepo": "/opt/zeppelin/local-repo/2CGVJ8TFK",
+        "hdfs.url": "http://10.20.32.138:50070/webhdfs/v1/"
       },
       "status": "READY",
       "interpreterGroup": [
@@ -493,6 +493,57 @@
         }
       ],
       "dependencies": [],
+      "option": {
+        "remote": true,
+        "port": -1,
+        "perNote": "shared",
+        "perUser": "shared",
+        "isExistingProcess": false,
+        "setPermission": false,
+        "users": [],
+        "isUserImpersonate": false
+      }
+    },
+    "2CE7WTCQF": {
+      "id": "2CE7WTCQF",
+      "name": "hived",
+      "group": "jdbc",
+      "properties": {
+        "default.password": "HCDhcd123",
+        "zeppelin.jdbc.auth.type": "",
+        "common.max_count": "1000",
+        "zeppelin.jdbc.principal": "",
+        "default.user": "hive",
+        "zeppelin.interpreter.localRepo": "/opt/zeppelin/local-repo/2CE7WTCQF",
+        "default.url": "jdbc:hive2://10.20.32.137:10000",
+        "default.driver": "org.apache.hive.jdbc.HiveDriver",
+        "zeppelin.jdbc.keytab.location": "",
+        "zeppelin.jdbc.concurrent.use": "true",
+        "zeppelin.jdbc.concurrent.max_connection": "10"
+      },
+      "status": "READY",
+      "interpreterGroup": [
+        {
+          "name": "sql",
+          "class": "org.apache.zeppelin.jdbc.JDBCInterpreter",
+          "defaultInterpreter": false,
+          "editor": {
+            "language": "sql",
+            "editOnDblClick": false
+          }
+        }
+      ],
+      "dependencies": [
+        {
+          "groupArtifactVersion": "org.apache.hive:hive-jdbc:1.2.1",
+          "local": false
+        },
+        {
+          "groupArtifactVersion": "org.apache.hadoop:hadoop-core:1.2.1",
+          "local": false,
+          "exclusions": []
+        }
+      ],
       "option": {
         "remote": true,
         "port": -1,
@@ -529,6 +580,32 @@
       "2CGMU3T2D",
       "2CE7Q28VT",
       "2CDKE9WCC"
+    ],
+    "2CET76ZKY": [
+      "2CGMU3T2D",
+      "2CF5TZXSW",
+      "2CDZT1M5B",
+      "2CFBDYS11",
+      "2CDXFECKF",
+      "2CHFQ4GXR",
+      "2CGVJ8TFK",
+      "2CEFWWBFE",
+      "2CE7Q28VT",
+      "2CDKE9WCC",
+      "2CE7WTCQF"
+    ],
+    "2CFH5J6JS": [
+      "2CF5TZXSW",
+      "2CDZT1M5B",
+      "2CFBDYS11",
+      "2CDXFECKF",
+      "2CHFQ4GXR",
+      "2CGVJ8TFK",
+      "2CEFWWBFE",
+      "2CGMU3T2D",
+      "2CE7Q28VT",
+      "2CDKE9WCC",
+      "2CE7WTCQF"
     ],
     "2A94M5J1Z": [
       "2CF5TZXSW",

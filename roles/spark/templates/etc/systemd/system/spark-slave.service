@@ -1,0 +1,15 @@
+[Unit]
+Description=Apache Spark Slave
+Wants=network.target network-online.target
+After=network.target network-online.target
+ 
+[Service]
+User=vertica
+Type=forking
+ExecStartPre={{ spark_home }}/conf/spark-env.sh
+ExecStart={{ spark_home }}/sbin/start-slave.sh spark://{{ spark_worker_masters }}
+ExecStop={{ spark_home }}/sbin/stop-slave.sh
+Restart=on-abort
+
+[Install]
+WantedBy=multi-user.target
