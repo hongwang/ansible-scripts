@@ -1,21 +1,23 @@
 ---
-- name: Install pm2 package
+- name: PM2 | Install pm2 package
   npm: 
     name: "pm2"
     global: yes
     state: present
 
-- name: Looking up user home
+- name: PM2 | Looking up user home
   shell: >
     egrep "^{{ pm2_user }}:" /etc/passwd | awk -F: '{ print $6 }'
   changed_when: false
   register: pm2_user_home
 
-- name: Installing startup script
+- name: PM2 | Installing startup script
   command: "pm2 startup systemd -u {{ pm2_user }} --hp {{ pm2_user_home.stdout }}"
 
-- name: Enable Airflow Service
+- name: PM2 | Enable systemd Service
   become: yes
   systemd:
     name: "pm2-{{ pm2_user }}.service"
+    daemon_reload: yes
     enabled: yes
+    state: restarted

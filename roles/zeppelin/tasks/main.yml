@@ -1,12 +1,12 @@
 ---
-- name: Download Zeppelin package
+- name: Zeppelin | Download Zeppelin package
   get_url: 
     url: "{{ zeppelin_package_url }}"
     dest: "~{{ zeppelin_user }}/downloads"
     owner: "{{ zeppelin_user }}"
     group: "{{ zeppelin_user }}"
 
-- name: Unpack Zeppelin package
+- name: Zeppelin | Unpack Zeppelin package
   unarchive:
     src: "~{{ zeppelin_user }}/downloads/{{ zeppelin_package_url | basename }}"
     dest: /opt/
@@ -14,7 +14,7 @@
     group: "{{ zeppelin_user }}"
     remote_src: True
 
-- name: Set link to zeppelin directory
+- name: Zeppelin | Set link to Zeppelin directory
   file:
     src: "/opt/{{ zeppelin_package_url | basename　| splitext | first }}"
     dest: "{{ zeppelin_home }}"
@@ -25,7 +25,7 @@
 
 
 # For python interpreter(matplotlib)
-- name: Superset | Install system packages
+- name: Zeppelin | Install system packages
   action: apt pkg={{ item }} state=installed
   with_items:
     - python3-tk
@@ -44,7 +44,7 @@
     - pandas
     - pandasql
 
-- name: Install zeppelin interpreters
+- name: Zeppelin | Install Zeppelin interpreters
   command: "{{ zeppelin_home }}/bin/install-interpreter.sh --name {{ item }}"
   with_items:
     - cassandra
@@ -57,7 +57,7 @@
     - python
     - shell
 
-- name: Copy zeppelin config
+- name: Zeppelin | Copy config
   template: 
     src: "opt/zeppelin/conf/zeppelin-env.sh"
     dest: "{{ zeppelin_home }}/conf/zeppelin-env.sh"
@@ -65,7 +65,7 @@
     group: "{{ zeppelin_user }}"
     mode: "0644"
 
-- name: Set zeppelin Service
+- name: Zeppelin | Set systemd Service
   become: yes
   template: 
     src: "etc/systemd/system/zeppelin.service"
@@ -74,8 +74,10 @@
     group: "root"
     mode: "0644"
 
-- name: Enable zeppelin Service
+- name: Zeppelin | Enable systemd Service
   become: yes
   systemd:
     name: "zeppelin.service"
+    daemon_reload: yes
     enabled: yes
+    state: restarted

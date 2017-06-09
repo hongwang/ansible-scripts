@@ -44,8 +44,10 @@
     group: "root"
     mode: "0644"
 
-- name: Enable superset Service
+- name: Superset | Enable systemd Service
   become: yes
   systemd:
     name: "superset.service"
+    daemon_reload: yes
     enabled: yes
+    state: restarted

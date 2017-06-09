@@ -42,7 +42,9 @@
   become: yes
   systemd:
     name: "{{ item }}"
+    daemon_reload: yes
     enabled: yes
+    state: restarted
   with_items:
     - airflow-webserver.service
     - airflow-scheduler.service
