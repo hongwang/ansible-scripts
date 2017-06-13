@@ -1,0 +1,13 @@
+---
+- name: Deploy Spark
+  hosts: job-servers
+  gather_facts: False
+  become: yes
+  roles:
+    - spark
+  vars:
+    spark_user: vertica
+    spark_package_url: http://mirrors.hust.edu.cn/apache/spark/spark-2.1.0/spark-2.1.0-bin-hadoop2.7.tgz
+    spark_home: /opt/spark
+    spark_masters: sh-bigdata-01:7077,sh-bigdata-02:7077,sh-bigdata-03:7077
+    cassandra_hosts: 10.20.32.141,10.20.32.142,10.20.32.143
