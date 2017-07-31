@@ -1,0 +1,16 @@
+[Unit]
+Description=Jupyter Service
+After=network.target
+
+[Service]
+Type=simple
+PIDFile=/run/jupyter.pid
+WorkingDirectory=/opt/jupyter/workspace
+ExecStart=/opt/jupyter/venv/bin/python3 /opt/jupyter/venv/bin/jupyter notebook --no-browser --config=/opt/jupyter/jupyter_notebook_config.py
+User=vertica
+Group=vertica
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
