@@ -7,5 +7,5 @@
     - zeppelin
   vars:
     zeppelin_user: vertica
-    zeppelin_package_url: http://mirrors.hust.edu.cn/apache/zeppelin/zeppelin-0.7.1/zeppelin-0.7.1-bin-netinst.tgz
+    zeppelin_package_url: http://mirrors.hust.edu.cn/apache/zeppelin/zeppelin-0.7.3/zeppelin-0.7.3-bin-netinst.tgz
     zeppelin_home: /opt/zeppelin

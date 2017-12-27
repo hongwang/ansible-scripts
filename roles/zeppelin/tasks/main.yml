@@ -48,7 +48,7 @@
   command: "{{ zeppelin_home }}/bin/install-interpreter.sh --name {{ item }}"
   with_items:
     - cassandra
-    - angular
+    - beam
     - elasticsearch
     - file
     - jdbc
