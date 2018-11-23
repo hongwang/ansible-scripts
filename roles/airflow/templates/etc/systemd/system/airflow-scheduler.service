@@ -8,9 +8,9 @@ Environment=AIRFLOW_CONFIG={{ airflow_home }}/airflow.cfg
 User={{ airflow_user }}
 Group={{ airflow_user }}
 Type=simple
-ExecStart=/usr/local/bin/airflow scheduler -n 5
+ExecStart=/bin/bash -c 'PATH=/opt/spark/bin:/opt/embulk/bin:$PATH exec /usr/local/bin/airflow scheduler'
 Restart=always
-RestartSec=1s
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target
