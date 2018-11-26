@@ -3,9 +3,9 @@ Description=Superset daemon
 After=network.target
 
 [Service]
-Environment=PYTHONPATH=${PYTHONPATH}:{{ superset_home }}
+Environment=SUPERSET_CONFIG_PATH={{ superset_home }}/superset_config.py
 Type=simple
-ExecStart=/usr/local/bin/superset runserver -t 600
+ExecStart=/usr/local/bin/superset runserver
 
 [Install]
 WantedBy=multi-user.target
