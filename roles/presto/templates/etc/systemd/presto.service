@@ -1,0 +1,14 @@
+[Unit]
+Description=Presto
+After=network.target
+
+[Service]
+Type=forking
+User={{ presto_user }}
+Group={{ presto_user }}
+ExecStart={{ presto_home }}/bin/launcher start
+ExecStop={{ presto_home }}/bin/launcher stop
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

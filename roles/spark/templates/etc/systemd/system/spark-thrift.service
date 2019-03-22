@@ -5,7 +5,7 @@ After=network.target network-online.target
 [Service]
 User={{ spark_user }}
 Type=forking
-ExecStart={{ spark_home }}/sbin/start-thriftserver.sh --name 'Datahub' --conf spark.cassandra.connection.host=10.20.32.74,10.20.32.76,10.20.32.78 --conf spark.cassandra.auth.username=farseer --conf spark.cassandra.auth.password=HCDhcd@123 --packages com.datastax.spark:spark-cassandra-connector_2.11:2.0.2,org.mongodb.spark:mongo-spark-connector_2.11:2.0.0 --driver-cores 1 --driver-memory 1G --total-executor-cores 2 --executor-memory 2G
+ExecStart={{ spark_home }}/sbin/start-thriftserver.sh --name 'ThriftServer' --driver-cores 4 --driver-memory 7G --total-executor-cores 4 --executor-memory 16G --conf spark.scheduler.pool=production
 ExecStop={{ spark_home }}/sbin/stop-thriftserver.sh
 
 [Install]
